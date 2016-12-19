@@ -1,0 +1,1 @@
+https://core-api.barchart.com/v1/historical/get?symbol=CLG17&fields=tradeTime.format(m%2Fd%2Fy)%2CopenPrice%2ChighPrice%2ClowPrice%2ClastPrice%2Cvolume%2CopenInterest%2CsymbolCode%2CsymbolType&startDate=2016-12-07&endDate=2016-12-09&type=eod&orderDir=desc&limit=100&meta=field.shortName%2Cfield.type%2Cfield.description&page=1&raw=1

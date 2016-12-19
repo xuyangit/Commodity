@@ -1,0 +1,490 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>User Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="Ekomers Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design"/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel='stylesheet' type='text/css'/>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- Custom Theme files -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel='stylesheet' type='text/css'/>
+    <link href="{{ url_for('static', filename='css/default.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ url_for('static', filename='css/default.date.css') }}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/easyui.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/icon.css') }}">
+
+    <!-- Custom Theme files -->
+    <!--webfont-->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/echarts.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.easyui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/picker.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/picker.date.js') }}"></script>
+</head>
+<body onload="checkCookie()" onhashchange="hashChange()">
+<div class="login_header">
+    <div class="container">
+        <div class="header_top">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt=""/>
+            </div>
+            <div class="top-nav">
+                <span class="menu"><img src="{{ url_for('static', filename='images/menu.png') }}" alt=""/></span>
+                <ul class="nav1">
+                    <li class="active"><a href="#usercharts">Home</a></li>
+                    <li><a href="#future">Future</a></li>
+                    <li><a href="#swap">Swap</a></li>
+                    <li><a href="#tradelist">Trade History</a></li>
+                    <li><a href="#userinfo">User Info</a></li>
+                </ul>
+                <!-- script-for-menu -->
+                <script>
+                    $("span.menu").click(function () {
+                        $("ul.nav1").slideToggle(300, function () {
+                            // Animation complete.
+                        });
+                    });
+                </script>
+                <!-- /script-for-menu -->
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div style="margin-top:5em;">
+    </div>
+</div>
+<section id="usercharts">
+    <div class="container">
+        <div style="float: left">
+            <div id="chart1" style="float: left;width: 400px;height:400px;"></div>
+            <div id="chart2" style="float: left;width: 400px;height:400px;"></div>
+            <div id="chart3" style="float: left;width: 400px;height:400px;"></div>
+            <div id="chart4" style="float: left;width: 400px;height:400px;"></div>
+        </div>
+    </div>
+</section>
+<section id="future">
+    <div class="container">
+        <span><h2>Make a future trade</h2></span>
+        <form id="futureForm" name="futureForm">
+            <div>
+                <span><label for="futureType">Product type*</label></span>
+                <select name="futureType" id="futureType">
+                    <option>WTI</option>
+                    <option>BRT</option>
+                </select>
+            </div>
+            <div>
+                <span><label for="lotOfFuture">Lots*</label></span>
+                <br>
+                <input name="lotOfFuture" id="lotOfFuture" type="text" placeholder="1 lot == 1000 BBL"
+                       onkeyup="value=value.replace(/[^\d]/g,'')">
+            </div>
+            <div>
+                <span><label for="priceOfFuture">Price*</label></span>
+                <br>
+                <input name="priceOfFuture" id="priceOfFuture" type="text" placeholder="Price in USD/BBL">
+                <span>$/BBL</span>
+            </div>
+            <div>
+                <span><label for="futureCode">Product Code*</label></span>
+                <select name="futureCode" id="futureCode"></select>
+            </div>
+            <div id="futureTip" class="error hide">
+                <i class="error"></i>
+                <span id="futureTipContent" class="error">
+					Invalid parameter
+				</span>
+            </div>
+            <div align="right">
+                <input type="submit" value="  OK  ">&nbsp;&nbsp;
+            </div>
+        </form>
+    </div>
+</section>
+<section id="swap">
+    <div class="container">
+        <div style="float: left">
+            <div style="float: left;">
+                <span><h2>Make a swap trade</h2></span>
+                <form id="swapForm" name="swapForm">
+                    <div>
+                        <span><label for="counterpart">Counterpart*</label></span>
+                        <br>
+                        <input name="counterpart" id="counterpart" type="text" placeholder="enter your counterpart name">
+                    </div>
+                    <div>
+                        <span><label for="productType">Product type*</label></span>
+                        <select name="productType" id="productType">
+                            <option>WTI</option>
+                            <option>BRT</option>
+                        </select>
+                    </div>
+                    <div>
+                        <span><label for="buyOrSell">Buy/Sell*</label></span>
+                        <select name="buyOrSell" id="buyOrSell">
+                            <option>Buy</option>
+                            <option>Sell</option>
+                        </select>
+                    </div>
+                    <div>
+                        <span><label for="lotOfSwap">Lots*</label></span>
+                        <br>
+                        <input name="lotOfSwap" id="lotOfSwap" type="text"
+                               onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="1 lot == 1000 BBL">
+                    </div>
+                    <div>
+                        <span><label for="priceOfSwap">Price*</label></span>
+                        <br>
+                        <input name="priceOfSwap" id="priceOfSwap" type="text" placeholder="Price in USD/BBL">
+                        <span>$/BBL</span>
+                    </div>
+                    <div>
+                        <span><label for="startDate">Period*</label></span>
+                        <br>
+                        <input name="startDate" id="startDate" type="text" style="width: 30%">
+                        <span>  ~  </span>
+                        <input name="endDate" type="text" id="endDate" style="width: 30%">
+                    </div>
+                    <div id="swapTip" class="error hide">
+                        <i class="error"></i>
+                        <span id="swapTipContent" class="error">
+                        Invalid parameter
+                    </span>
+                    </div>
+                    <div align="left">
+                        <br>
+                        <input type="submit" value="  OK  ">
+                    </div>
+                </form>
+            </div>
+            <div style="float: left">
+                <span><h3>Risk Evaluation:</h3></span>
+                <table id="swapRisk" name="swapRisk" class="gridtable">
+                    <tr>
+                        <th>Product Type</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Work days</th>
+                        <th>Risk</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="tradelist">
+    <div class="container">
+        <span><h2>Your Trade History:</h2></span>
+        <div id="futureList">
+            <span id="futureTradeSpan"><h3>You make x future trades:</h3></span>
+            <table name="futureRecords" id="futureRecords" class="gridtable">
+                <tbody>
+                    <tr>
+                        <th>Trade time</th>
+                        <th>Product code</th>
+                        <th>Lots</th>
+                        <th>Price</th>
+                        <th>Risk</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="swapList">
+            <span id="swapTradeSpan"><h3>You make x swap trades:</h3></span>
+            <table name="swapRecords" id="swapRecords" class="gridtable">
+                <tbody>
+                    <tr>
+                        <th>Counterpart</th>
+                        <th>Trade time</th>
+                        <th>Product code</th>
+                        <th>Quantity(BBL)</th>
+                        <th>Price($/BBL)</th>
+                        <th>Risk</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<section id="userinfo">
+    <div class="container">
+        <table id="infoTable">
+            <tbody>
+            <tr>
+                <th>Name:</th>
+                <td class="line30" id="tdName"></td>
+            </tr>
+            <tr>
+                <th>Email:</th>
+                <td class="line30" id="tdEmail"></td>
+            </tr>
+            <tr>
+                <th>Username:</th>
+                <td class="line30" id="tdUsername"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="min-height: 80px">
+
+    </div>
+</section>
+<div class="footer_bottom">
+    <div class="container">
+        <div class="copy">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt=""/>
+
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    var info = null;
+    function getInfo() {
+        var ajaxCall = new XMLHttpRequest();
+        ajaxCall.open("GET", "getfutureinfo", false);
+        ajaxCall.onreadystatechange = function () {
+            jsonObject = JSON.parse(ajaxCall.responseText);
+            info = jsonObject.info;
+            var selectObj = document.getElementById('futureCode');
+            for (var i = 0; i < info.length; i++) {
+                selectObj.options.add(new Option(info[i], info[i]));
+            }
+        }
+        ajaxCall.send();
+    }
+    function fillCharts() {
+        var ajaxCall = new XMLHttpRequest();
+        ajaxCall.open("POST", "tradehistory", false);
+        ajaxCall.onreadystatechange = function () {
+            jsonObject = JSON.parse(ajaxCall.responseText);
+            var numOfFuture = jsonObject.future.length;
+            var numOfSwap = jsonObject.swap.length;
+            //fill history
+            document.getElementById('futureTradeSpan').innerText = "You make " + numOfFuture + " future trades:";
+            document.getElementById('swapTradeSpan').innerText = "You make " + numOfSwap + " swap trades:";
+            var futureRecords = document.getElementById('futureRecords');
+            var swapRecords = document.getElementById('swapRecords');
+            $("#futureRecords tbody #data").remove();
+            $("#swapRecords tbody #data").remove();
+            for (var i = 0; i < numOfFuture; i++) {
+                var row = futureRecords.insertRow(i + 1);
+                row.id = "data"
+                row.insertCell(0).innerText = jsonObject.future[i].timeOfTrade;
+                row.insertCell(1).innerText = jsonObject.future[i].productCode;
+                row.insertCell(2).innerText = jsonObject.future[i].quantity;
+                row.insertCell(3).innerText = jsonObject.future[i].price;
+                row.insertCell(4).innerText = jsonObject.future[i].quantity;
+            }
+            for (var i = 0; i < numOfSwap; i++) {
+                var row = swapRecords.insertRow(i + 1);
+                row.id = "data"
+                row.insertCell(0).innerText = jsonObject.swap[i].counterpart;
+                row.insertCell(1).innerText = jsonObject.swap[i].timeOfTrade;
+                row.insertCell(2).innerText = jsonObject.swap[i].productCode;
+                row.insertCell(3).innerText = jsonObject.swap[i].quantity;
+                row.insertCell(4).innerText = jsonObject.swap[i].price;
+                row.insertCell(5).innerText = jsonObject.swap[i].quantity;
+            }
+            var option1 = {
+                title: {
+                    text: 'Trade distribution of your history trades'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    top: '20%',
+                    data: ['Future', 'Swap']
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                series: [
+                    {
+                        name: 'Trade distribution',
+                        type: 'pie',
+                        radius: '40%',
+                        data: [
+                            {value: numOfFuture, name: 'Future'},
+                            {value: numOfSwap, name: 'Swap'}
+                        ]
+                    }
+                ]
+            }
+            var option2 = {
+                title: {
+                    text: 'Future trades distribution'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                series: [
+                    {
+                        name: 'Future trades distribution',
+                        type: 'pie',
+                        radius: '40%',
+                        data: (function () {
+                            var res = [];
+                            var len = numOfFuture;
+                            while (len--) {
+                                res.push({
+                                    value: parseInt(jsonObject.future[len].quantity),
+                                    name: jsonObject.future[len].productCode
+                                })
+                            }
+                            return res;
+                        })()
+                    }
+                ]
+            }
+            var option3 = {
+                title: {
+                    text: 'Swap trades distribution'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                series: [
+                    {
+                        name: 'Swap trades distribution',
+                        type: 'pie',
+                        radius: '40%',
+                        data: (function () {
+                            var res = [];
+                            var len = numOfSwap;
+                            while (len--) {
+                                res.push({
+                                    value: parseInt(jsonObject.swap[len].quantity),
+                                    name: jsonObject.swap[len].productCode
+                                })
+                            }
+                            return res;
+                        })()
+                    }
+                ]
+            }
+            chart1.setOption(option1);
+            chart2.setOption(option2);
+            chart3.setOption(option3);
+        }
+        ajaxCall.send();
+    }
+    var chart1 = echarts.init(document.getElementById('chart1'));
+    var chart2 = echarts.init(document.getElementById('chart2'));
+    var chart3 = echarts.init(document.getElementById('chart3'));
+    var chart4 = echarts.init(document.getElementById('chart4'));
+    $("#startDate").pickadate({
+        min: new Date(2016, 11, 1),
+        format: 'yyyy-mm',
+        selectYears: true,
+        selectMonths: true
+    });
+    $("#endDate").pickadate({
+        min: new Date(2016, 11, 1),
+        format: 'yyyy-mm',
+        selectYears: true,
+        selectMonths: true
+    });
+    $('#futureForm').submit(function (e) {
+        e.preventDefault();
+        $.post('futureTran', $(this).serialize(), function (data) {
+            if (data.err && data.err != '') {
+                document.getElementById('futureTipContent').innerText = data.err;
+                $('#futureTip').removeClass('hide');
+            } else if (data.risk) {
+                $('#futureTip').addClass('hide');
+                alert("Your risk is " + data.risk);
+            }
+        }, "json");
+    });
+    $('#swapForm').submit(function (e) {
+        e.preventDefault();
+        $.post('swapTran', $(this).serialize(), function (data) {
+            if (data.err && data.err != '') {
+                document.getElementById('swapTipContent').innerText = data.err;
+                $('#swapTip').removeClass('hide');
+            } else {
+                var len = data.data.length;
+                var swapRisk = document.getElementById('swapRisk');
+                $("#swapRisk tbody #data").remove();
+                for (var i = 0; i < len; i++) {
+                    var row = swapRisk.insertRow(i + 1);
+                    row.id = "data";
+                    row.insertCell(0).innerText = data.data[i]['productCode'];
+                    row.insertCell(1).innerText = data.data[i]['startday'];
+                    row.insertCell(2).innerText = data.data[i]['endday'];
+                    row.insertCell(3).innerText = data.data[i]['wdays'];
+                    row.insertCell(4).innerText = data.data[i]['wdays'] * data.average;
+                }
+            }
+        }, "json");
+    });
+    function hashChange() {
+        var hash = window.location.hash.slice(1);
+        if (!hash) {
+            hash = "usercharts";
+        }
+        document.getElementById("usercharts").style.display = "none";
+        document.getElementById("future").style.display = "none";
+        document.getElementById("swap").style.display = "none";
+        document.getElementById("tradelist").style.display = "none";
+        document.getElementById("userinfo").style.display = "none";
+        if (hash == "userinfo") {
+            getUserInfo();
+        }
+        else if (hash == "usercharts" || hash == "tradelist") {
+            fillCharts();
+        }
+        document.getElementById(hash).style.display = "block";
+    }
+    function getUserInfo() {
+        username = getCookie('userid');
+        if (username != null && username != "") {
+            var ajaxCall = new XMLHttpRequest();
+            ajaxCall.open("GET", "getUserInfo", false);
+            ajaxCall.onreadystatechange = function () {
+                jsonObject = JSON.parse(ajaxCall.responseText);
+                $("#tdName").text(jsonObject.name);
+                $("#tdEmail").text(jsonObject.email);
+                $("#tdUsername").text(jsonObject.userName);
+            }
+            ajaxCall.send();
+        }
+    }
+    function getCookie(c_name) {
+        if (document.cookie.length > 0) {
+            c_start = document.cookie.indexOf(c_name + "=")
+            if (c_start != -1) {
+                c_start = c_start + c_name.length + 1
+                c_end = document.cookie.indexOf(";", c_start)
+                if (c_end == -1) c_end = document.cookie.length
+                return unescape(document.cookie.substring(c_start, c_end))
+            }
+        }
+        return ""
+    }
+    function checkCookie() {
+        hashChange();
+        username = getCookie('userid')
+        if (username != null && username != "") {
+            $('#username').text("Welcome " + username);
+        }
+        fillCharts();
+        getInfo();
+    }
+</script>
+</html>		

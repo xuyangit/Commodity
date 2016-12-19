@@ -1,0 +1,373 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="Ekomers Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design"/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel='stylesheet' type='text/css'/>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- Custom Theme files -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel='stylesheet' type='text/css'/>
+    <!-- Custom Theme files -->
+    <!--webfont-->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+</head>
+<body>
+<div class="login_header">
+    <div class="container">
+        <div class="header_top">
+            <div class="logo">
+                <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='images/logo.png') }}" alt=""/></a>
+            </div>
+            <div class="top-nav">
+                <span class="menu"><img src="{{ url_for('static', filename='images/menu.png') }}" alt=""/></span>
+                <ul class="nav1">
+                    <li class="active"><a href="{{ url_for('home') }}">Home </a></li>
+                </ul>
+                <!-- script-for-menu -->
+                <script>
+                    $("span.menu").click(function () {
+                        $("ul.nav1").slideToggle(300, function () {
+                            // Animation complete.
+                        });
+                    });
+                </script>
+                <!-- /script-for-menu -->
+            </div>
+            <ul class="widget">
+                <a href="{{ url_for('register') }}">
+                    <li class="join">Join Now</li>
+                </a>
+                <a href="{{ url_for('login') }}">
+                    <li class="login">Login</li>
+                </a>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="register">
+        <form id="form" method="post">
+            <div class="register-top-grid">
+                <h3>Personal Information</h3>
+                <div>
+                    <div>
+                        <span><label for="firstname">First Name*</label></span>
+                        <input name="firstname" id="firstname" type="text">
+                        <div class="desc info">
+                            <span>Please enter your firstname</span>
+                        </div>
+                        <div class="desc success hide">
+                            <i class="success"></i>
+                        </div>
+                        <div class="desc error hide">
+                            <i class="error"></i>
+                            <span class="error error_from_server">This field is required</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span><label for="lastname">Last Name*</label></span>
+                        <input name="lastname" id="lastname" type="text">
+                        <div class="desc info">
+                            <span>Please enter your lastname</span>
+                        </div>
+                        <div class="desc success hide">
+                            <i class="success"></i>
+                        </div>
+                        <div class="desc error hide">
+                            <i class="error"></i>
+                            <span class="error error_from_server">This field is required</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                <div>
+                    <span><label for="eaddress">Email Address*</label></span>
+                    <input name="eaddress" id="eaddress" type="text">
+                    <div class="desc info">
+                        <span>Please enter valid email address like xxx@xxx.com</span>
+                    </div>
+                    <div class="desc success hide">
+                        <i class="success"></i>
+                    </div>
+                    <div class="desc error hide">
+                        <i class="error"></i>
+                        <span class="error error_EMAIL_ALREADY_EXIST">
+                            This email already exists
+                        </span>
+                        <span class="error error_INVALID_EMAIL">
+                            Wrong format, enter a valid e-mail address
+                        </span>
+                        <span class="error error_from_server"></span>
+                    </div>
+                    </div>
+                </div>
+                <div class="register-bottom-grid">
+                    <h3>Login Information</h3>
+                    <div>
+                        <div>
+                            <span><label for="userid">Username*</label></span>
+                            <input name="userid" id="userid" type="text">
+                            <div class="desc info">
+                                <span>Please enter valid username within 1-14 letters</span>
+                            </div>
+                            <div class="desc success hide">
+                                <i class="success"></i>
+                            </div>
+                            <div class="desc error hide">
+                                <i class="error"></i>
+                                <span class="error error_USERNAME_ALREADY_EXIST">
+                                This username already exists
+                            </span>
+                                <span class="error error_INVALID_USERNAME">
+                                Wrong format, enter a valid username
+                            </span>
+                                <span class="error error_from_server"></span>
+                            </div>
+                        </div>
+                        <div>
+                            <span><label for="password">Password*</label></span>
+                            <input name="password" id="password" type="password">
+                            <div class="desc info">
+                                <span>6-16, case sensitive</span>
+                            </div>
+                            <div class="desc success hide">
+                                <i class="success"></i>
+                            </div>
+                            <div class="desc error hide">
+                                <i class="error"></i>
+                                <span class="error error_PASSWD_LENGTH">
+                                    Wrong length, should within 6-16, case sensitive
+                                </span>
+                                <span class="error error_from_server"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                    <div>
+                        <span><label for="confirmPassword">Confirm Password*</label></span>
+                        <input name="confirmPassword" id="confirmPassword" type="password">
+                        <div class="desc info">
+                            <span>Repeat your password</span>
+                        </div>
+                        <div class="desc success hide">
+                            <i class="success"></i>
+                        </div>
+                        <div class="desc error hide">
+                            <i class="error"></i>
+                            <span class="error error_NOT_MATCH">
+                        The two password fields did not match.
+                        </span>
+                            <span class="error error_from_server"></span>
+                        </div>
+                    </div>
+                        </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="register-but">
+                    <form>
+                        <input type="submit" value="submit">
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="footer">
+        <div class="clearfix"></div>
+    </div>
+</div>
+</div>
+</div>
+<div class="footer_bottom">
+    <div class="container">
+        <div class="copy">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt=""/>
+
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+    var validationUrl = '/register/validation';
+
+    function validateWithServer(field, data, callback) {
+        var ajaxCall = new XMLHttpRequest();
+        ajaxCall.open("Post", validationUrl, true);
+        ajaxCall.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        ajaxCall.onreadystatechange = function () {
+            callback(ajaxCall.responseText)
+        }
+        ajaxCall.send(JSON.stringify({
+            "field": field,
+            "data": data
+        }));
+    }
+
+    function showMeHideOther(node, type, me) {
+        node.children(type + me).siblings(type).addClass('hide');
+        node.children(type + me).removeClass('hide');
+    }
+
+    function updateDesc(node, err) {
+        if (err && err != '') {
+            showMeHideOther(node, 'div.desc', '.error');
+            node = node.children('div.desc.error');
+            if (err.match(/^\w+$/) && node.children('.error_' + err).length > 0) {
+                showMeHideOther(node, 'span.error', '.error_' + err);
+            } else {
+                showMeHideOther(node, 'span.error', '.error_from_server');
+                node.children('span.error_from_server').html(err.replace("\n", "<br />"));
+            }
+        } else {
+            showMeHideOther(node, 'div.desc', '.success');
+        }
+    }
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        }
+        return (null);
+    }
+    function checkFirstname(firstname, callback) {
+        if(!firstname) {
+            callback("This field is required" );
+            return;
+        }
+        else {
+            callback();
+        }
+    }
+    function checkLastname(lastname, callback) {
+        if(!lastname) {
+            callback("This field is required");
+            return;
+        }
+        else {
+            callback();
+        }
+    }
+    function checkEmail(email, callback) {
+        var validReg = /^([a-zA-Z0-9_\-\.\+]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if (!validReg.test(email)) {
+            callback("INVALID_EMAIL");
+            return;
+        }
+        validateWithServer("email", email, callback);
+    }
+
+    function checkPassword(password, callback) {
+        if(!password || password.length < 6 || password.length > 16) {
+            callback("PASSWD_LENGTH");
+            return;
+        }
+        else {
+            callback();
+        }
+    }
+
+    function checkUserid(userid, callback) {
+        if(!userid || userid.length > 14) {
+            callback("INVALID_USERNAME");
+            return;
+        }
+        validateWithServer("userid", userid, callback);
+    }
+    function checkPassword2(passwd2, callback) {
+        if (!passwd2) {
+            callback(mandatory_err_text);
+            return;
+        }
+        var passwd1 = $('#password').val();
+        if (passwd1 != passwd2) {
+            callback("NOT_MATCH");
+        } else if (!passwd1) {
+            return;
+        } else {
+            callback();
+        }
+    }
+
+
+    var checkers = {
+        'eaddress': checkEmail,
+        'firstname': checkFirstname,
+        'lastname': checkLastname,
+        'userid' : checkUserid,
+        'password' : checkPassword,
+        'confirmPassword': checkPassword2,
+    }
+
+
+    $("input").blur(function (e) {
+        var node = $(e.target).parent();
+        if (checkers[e.target.name]) {
+            checkers[e.target.name](e.target.value, function (err) {
+                updateDesc(node, err);
+            });
+        } else {
+            showMeHideOther(node, 'div.desc', '.info');
+        }
+    });
+
+    var mandatory_fields = ['firstname', 'lastname', 'userid', 'eaddress', 'password', 'confirmPassword'];
+    var mandatory_err_text = 'This field is required';
+
+    function isMandatoryFieldsFilled() {
+        var allFilled = true;
+        for (var i in mandatory_fields) {
+            var field = mandatory_fields[i];
+            var elem = $('input#' + field);
+            if (elem.length == 0) {
+                continue;
+            }
+            if (!elem.val()) {
+                allFilled = false;
+                updateDesc(elem.parent(), mandatory_err_text);
+            }
+        }
+        return allFilled;
+    }
+
+    $('#form').submit(function (e) {
+        e.preventDefault();
+        if (!isMandatoryFieldsFilled()) {
+            return;
+        }
+        if ($('div.desc.error').not('.hide').length > 0) {
+            return;
+        }
+        $('input[type=submit]').attr('disabled', true);
+        $.post('', $(this).serialize(), function (data) {
+            if (data.err && data.err != '') {
+                $('input[type=submit]').attr('disabled', false);
+                for (var field in data.err) {
+                    var node = $('#' + field).parent();
+                    updateDesc(node, data.err[field][0]);
+                }
+            } else if (data.redirect) {
+                alert("Register success and transferring to login page");
+                window.location = data.redirect;
+            }
+        }, "json");
+    });
+</script>
+
+</html>		

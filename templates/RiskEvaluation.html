@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Risk Evaluation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Ekomers Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel='stylesheet' type='text/css' />
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!-- Custom Theme files -->
+<link href="{{ url_for('static', filename='css/style.css') }}" rel='stylesheet' type='text/css' />
+<!-- Custom Theme files -->
+<!--webfont-->
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+</head>
+<body>
+<div class="login_header">
+	  	<div class="container">
+	  		<div class="header_top">
+			<div class="logo">
+				<img src="{{ url_for('static', filename='images/logo.png') }}" alt=""/>
+			</div>
+			<div class="top-nav">
+				<span class="menu"><img src="{{ url_for('static', filename='images/menu.png') }}" alt=""/></span>
+				<ul class="nav1">
+					<li class="active"><a href="{{ url_for('home') }}">Home </a></li>
+					<li><a href="{{ url_for('futureTran') }}">Future</a></li>
+					<li><a href="{{ url_for('swapTran') }}">Swap</a></li>
+					<li><a href="{{ url_for('riskEvaluation') }}">Risk Evaluation</a></li>
+				</ul>
+				<!-- script-for-menu -->
+				 <script>
+				   $( "span.menu" ).click(function() {
+					 $( "ul.nav1" ).slideToggle( 300, function() {
+					 // Animation complete.
+					  });
+					 });
+				</script>
+				<!-- /script-for-menu -->
+			</div>
+			<ul class="widget">
+				
+				<li class="join">welcome !</li>
+				<li class="login">XXX XXX</li>
+			</ul>
+			<div class="clearfix"> </div>
+		</div>
+       </div>
+      </div>
+      <div class="container">
+      	<div class="register">
+			   
+			   <div class="col-md-6 login-right">
+			  	<h3>Your Risk Evaluation:</h3>
+				
+                <table width="424" border="3">
+  <tr>
+    <td width="123" height="28" bgcolor="#787878"><div align="center">Period</div></td>
+    <td width="143" bgcolor="#787878"><div align="center">WTI</div></td>
+    <td width="132" bgcolor="#787878"><div align="center">Totall</div></td>
+    </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+
+			   </div>
+               	
+			   <div class="clearfix"> </div>
+		</div>
+        <div class="footer">
+	   	   <div class="col-xs-2">
+	   	      <ul class="footer_social">
+				<li><a href=""> <i class="fb1"> </i> </a></li>
+				<li><a href=""> <i class="g1"> </i> </a></li>
+	    	  </ul>
+	       </div>
+		   <div class="col-xs-8 client_bottom">
+		   	 <div class="client_bottom1">
+		   	  <img src="images/footer_slide.png" class="img-responsive" alt=""/>
+		   	  </div>
+		      <!--<span> </span>-->
+		   </div>
+		   <div class="col-xs-2">
+		     <ul class="footer_social social_right">
+		        <li><a href=""> <i class="instagram"> </i> </a></li>
+				<li><a href=""> <i class="tw1"> </i> </a></li>
+	    	</ul>
+	      </div>
+		  <div class="clearfix"></div>
+	  </div>
+	    </div>
+    </div>
+</div>    
+<div class="footer_bottom">
+   <div class="container">
+   	<div class="copy">
+   	  <img src="images/logo.png" alt=""/>
+      
+    </div>
+   </div>
+</div>		
+</body>
+</html>		
