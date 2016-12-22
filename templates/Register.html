@@ -21,179 +21,182 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
 </head>
 <body>
-<div class="login_header">
-    <div class="container">
-        <div class="header_top">
-            <div class="logo">
-                <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='images/logo.png') }}" alt=""/></a>
-            </div>
-            <div class="top-nav">
-                <span class="menu"><img src="{{ url_for('static', filename='images/menu.png') }}" alt=""/></span>
-                <ul class="nav1">
-                    <li class="active"><a href="{{ url_for('home') }}">Home </a></li>
-                </ul>
-                <!-- script-for-menu -->
-                <script>
-                    $("span.menu").click(function () {
-                        $("ul.nav1").slideToggle(300, function () {
-                            // Animation complete.
+<div id="container">
+    <div id="header" class="login_header">
+        <div class="container">
+            <div class="header_top">
+                <div class="logo">
+                    <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='images/logo.png') }}"
+                                                         alt=""/></a>
+                </div>
+                <div class="top-nav">
+                    <span class="menu"><img src="{{ url_for('static', filename='images/menu.png') }}" alt=""/></span>
+                    <ul class="nav1">
+                        <li class="active"><a href="{{ url_for('home') }}">Home </a></li>
+                    </ul>
+                    <!-- script-for-menu -->
+                    <script>
+                        $("span.menu").click(function () {
+                            $("ul.nav1").slideToggle(300, function () {
+                                // Animation complete.
+                            });
                         });
-                    });
-                </script>
-                <!-- /script-for-menu -->
+                    </script>
+                    <!-- /script-for-menu -->
+                </div>
+                <ul class="widget">
+                    <a href="{{ url_for('register') }}">
+                        <li class="join">Join Now</li>
+                    </a>
+                    <a href="{{ url_for('login') }}">
+                        <li class="login">Login</li>
+                    </a>
+                </ul>
+                <div class="clearfix"></div>
             </div>
-            <ul class="widget">
-                <a href="{{ url_for('register') }}">
-                    <li class="join">Join Now</li>
-                </a>
-                <a href="{{ url_for('login') }}">
-                    <li class="login">Login</li>
-                </a>
-            </ul>
-            <div class="clearfix"></div>
         </div>
     </div>
-</div>
-<div class="container">
-    <div class="register">
-        <form id="form" method="post">
-            <div class="register-top-grid">
-                <h3>Personal Information</h3>
-                <div>
-                    <div>
-                        <span><label for="firstname">First Name*</label></span>
-                        <input name="firstname" id="firstname" type="text">
-                        <div class="desc info">
-                            <span>Please enter your firstname</span>
+    <div id="content">
+        <div class="container">
+            <div class="register">
+                <form id="form" method="post">
+                    <div class="register-top-grid">
+                        <h3>Personal Information</h3>
+                        <div>
+                            <div>
+                                <span><label for="firstname">First Name*</label></span>
+                                <input name="firstname" id="firstname" type="text">
+                                <div class="desc info">
+                                    <span>Please enter your firstname</span>
+                                </div>
+                                <div class="desc success hide">
+                                    <i class="success"></i>
+                                </div>
+                                <div class="desc error hide">
+                                    <i class="error"></i>
+                                    <span class="error error_from_server">This field is required</span>
+                                </div>
+                            </div>
+                            <div>
+                                <span><label for="lastname">Last Name*</label></span>
+                                <input name="lastname" id="lastname" type="text">
+                                <div class="desc info">
+                                    <span>Please enter your lastname</span>
+                                </div>
+                                <div class="desc success hide">
+                                    <i class="success"></i>
+                                </div>
+                                <div class="desc error hide">
+                                    <i class="error"></i>
+                                    <span class="error error_from_server">This field is required</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="desc success hide">
-                            <i class="success"></i>
-                        </div>
-                        <div class="desc error hide">
-                            <i class="error"></i>
-                            <span class="error error_from_server">This field is required</span>
-                        </div>
-                    </div>
-                    <div>
-                        <span><label for="lastname">Last Name*</label></span>
-                        <input name="lastname" id="lastname" type="text">
-                        <div class="desc info">
-                            <span>Please enter your lastname</span>
-                        </div>
-                        <div class="desc success hide">
-                            <i class="success"></i>
-                        </div>
-                        <div class="desc error hide">
-                            <i class="error"></i>
-                            <span class="error error_from_server">This field is required</span>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                <div>
-                    <span><label for="eaddress">Email Address*</label></span>
-                    <input name="eaddress" id="eaddress" type="text">
-                    <div class="desc info">
-                        <span>Please enter valid email address like xxx@xxx.com</span>
-                    </div>
-                    <div class="desc success hide">
-                        <i class="success"></i>
-                    </div>
-                    <div class="desc error hide">
-                        <i class="error"></i>
-                        <span class="error error_EMAIL_ALREADY_EXIST">
+                        <div>
+                            <div>
+                                <span><label for="eaddress">Email Address*</label></span>
+                                <input name="eaddress" id="eaddress" type="text">
+                                <div class="desc info">
+                                    <span>Please enter valid email address like xxx@xxx.com</span>
+                                </div>
+                                <div class="desc success hide">
+                                    <i class="success"></i>
+                                </div>
+                                <div class="desc error hide">
+                                    <i class="error"></i>
+                                    <span class="error error_EMAIL_ALREADY_EXIST">
                             This email already exists
                         </span>
-                        <span class="error error_INVALID_EMAIL">
+                                    <span class="error error_INVALID_EMAIL">
                             Wrong format, enter a valid e-mail address
                         </span>
-                        <span class="error error_from_server"></span>
-                    </div>
-                    </div>
-                </div>
-                <div class="register-bottom-grid">
-                    <h3>Login Information</h3>
-                    <div>
-                        <div>
-                            <span><label for="userid">Username*</label></span>
-                            <input name="userid" id="userid" type="text">
-                            <div class="desc info">
-                                <span>Please enter valid username within 1-14 letters</span>
+                                    <span class="error error_from_server"></span>
+                                </div>
                             </div>
-                            <div class="desc success hide">
-                                <i class="success"></i>
-                            </div>
-                            <div class="desc error hide">
-                                <i class="error"></i>
-                                <span class="error error_USERNAME_ALREADY_EXIST">
+                        </div>
+                        <div class="register-bottom-grid">
+                            <h3>Login Information</h3>
+                            <div>
+                                <div>
+                                    <span><label for="userid">Username*</label></span>
+                                    <input name="userid" id="userid" type="text">
+                                    <div class="desc info">
+                                        <span>Please enter valid username within 1-14 letters</span>
+                                    </div>
+                                    <div class="desc success hide">
+                                        <i class="success"></i>
+                                    </div>
+                                    <div class="desc error hide">
+                                        <i class="error"></i>
+                                        <span class="error error_USERNAME_ALREADY_EXIST">
                                 This username already exists
                             </span>
-                                <span class="error error_INVALID_USERNAME">
+                                        <span class="error error_INVALID_USERNAME">
                                 Wrong format, enter a valid username
                             </span>
-                                <span class="error error_from_server"></span>
-                            </div>
-                        </div>
-                        <div>
-                            <span><label for="password">Password*</label></span>
-                            <input name="password" id="password" type="password">
-                            <div class="desc info">
-                                <span>6-16, case sensitive</span>
-                            </div>
-                            <div class="desc success hide">
-                                <i class="success"></i>
-                            </div>
-                            <div class="desc error hide">
-                                <i class="error"></i>
-                                <span class="error error_PASSWD_LENGTH">
+                                        <span class="error error_from_server"></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span><label for="password">Password*</label></span>
+                                    <input name="password" id="password" type="password">
+                                    <div class="desc info">
+                                        <span>6-16, case sensitive</span>
+                                    </div>
+                                    <div class="desc success hide">
+                                        <i class="success"></i>
+                                    </div>
+                                    <div class="desc error hide">
+                                        <i class="error"></i>
+                                        <span class="error error_PASSWD_LENGTH">
                                     Wrong length, should within 6-16, case sensitive
                                 </span>
-                                <span class="error error_from_server"></span>
+                                        <span class="error error_from_server"></span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div>
-                    <div>
-                        <span><label for="confirmPassword">Confirm Password*</label></span>
-                        <input name="confirmPassword" id="confirmPassword" type="password">
-                        <div class="desc info">
-                            <span>Repeat your password</span>
-                        </div>
-                        <div class="desc success hide">
-                            <i class="success"></i>
-                        </div>
-                        <div class="desc error hide">
-                            <i class="error"></i>
-                            <span class="error error_NOT_MATCH">
+                            <div>
+                                <div>
+                                    <span><label for="confirmPassword">Confirm Password*</label></span>
+                                    <input name="confirmPassword" id="confirmPassword" type="password">
+                                    <div class="desc info">
+                                        <span>Repeat your password</span>
+                                    </div>
+                                    <div class="desc success hide">
+                                        <i class="success"></i>
+                                    </div>
+                                    <div class="desc error hide">
+                                        <i class="error"></i>
+                                        <span class="error error_NOT_MATCH">
                         The two password fields did not match.
                         </span>
-                            <span class="error error_from_server"></span>
+                                        <span class="error error_from_server"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="register-but">
+                            <form>
+                                <input type="submit" value="submit">
+                                <div class="clearfix"></div>
+                            </form>
                         </div>
                     </div>
-                        </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="register-but">
-                    <form>
-                        <input type="submit" value="submit">
-                        <div class="clearfix"></div>
-                    </form>
-                </div>
+                </form>
             </div>
-        </form>
+            <div class="footer">
+                <div class="clearfix"></div>
+            </div>
+        </div>
     </div>
-    <div class="footer">
-        <div class="clearfix"></div>
-    </div>
-</div>
-</div>
-</div>
-<div class="footer_bottom">
-    <div class="container">
-        <div class="copy">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt=""/>
+    <div class="footer_bottom">
+        <div class="container">
+            <div class="copy">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt=""/>
 
+            </div>
         </div>
     </div>
 </div>
@@ -247,8 +250,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         return (null);
     }
     function checkFirstname(firstname, callback) {
-        if(!firstname) {
-            callback("This field is required" );
+        if (!firstname) {
+            callback("This field is required");
             return;
         }
         else {
@@ -256,7 +259,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         }
     }
     function checkLastname(lastname, callback) {
-        if(!lastname) {
+        if (!lastname) {
             callback("This field is required");
             return;
         }
@@ -274,7 +277,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     }
 
     function checkPassword(password, callback) {
-        if(!password || password.length < 6 || password.length > 16) {
+        if (!password || password.length < 6 || password.length > 16) {
             callback("PASSWD_LENGTH");
             return;
         }
@@ -284,7 +287,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     }
 
     function checkUserid(userid, callback) {
-        if(!userid || userid.length > 14) {
+        if (!userid || userid.length > 14) {
             callback("INVALID_USERNAME");
             return;
         }
@@ -310,8 +313,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         'eaddress': checkEmail,
         'firstname': checkFirstname,
         'lastname': checkLastname,
-        'userid' : checkUserid,
-        'password' : checkPassword,
+        'userid': checkUserid,
+        'password': checkPassword,
         'confirmPassword': checkPassword2,
     }
 

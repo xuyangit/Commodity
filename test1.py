@@ -6,7 +6,6 @@ from flask import Response
 from flask import json
 from flask import redirect, url_for
 from flask import make_response
-from flask.json import JSONEncoder
 from datetime import date, datetime, timedelta
 import time
 import jwt
@@ -14,21 +13,7 @@ import calendar
 import pymysql.cursors
 from dateutil import rrule
 
-class CustomJSONEncoder(JSONEncoder):
-    def default(self, obj):
-        try:
-            if isinstance(obj, date):
-                res = datetime.strftime(obj, "%Y-%m-%d")
-                return res
-            iterable = iter(obj)
-        except TypeError:
-            pass
-        else:
-            return list(iterable)
-        return JSONEncoder.default(self, obj)
-    
 app = Flask(__name__)
-app.json_encoder = CustomJSONEncoder
 sqlCli = pymysql.connect(host='localhost',
                          user='root',
                          password='xuyang2008',
@@ -42,7 +27,7 @@ def workdays(start, end, holidays=0, days_off=None):
     workdays = [x for x in range(7) if x not in days_off]
     days = rrule.rrule(rrule.DAILY, dtstart=start, until=end,byweekday=workdays)
     return days.count() - holidays
-    
+
 @app.route("/")
 @app.route("/home")
 def home():
@@ -116,12 +101,12 @@ def swapTran():
             with sqlCli.cursor() as cursor:
                 for r in raw:
                     if(r['wdays'] != 0):
-                        sql = "insert into `swap`(`counterpart`, `buyOrSell`, `price`, `productType`, `productCode`, `userId`, `quantity`, `startDate`, `timeOfTrade`, `endDate`, `tradeId`, `wdays`)"\
-                              " values ('{}', {}, {}, '{}', '{}', '{}', {}, '{}', '{}', '{}', '{}', {})".format(
-                        counterpart, buyOrSell, price, productType, r['productCode'], userid, quanPerDay * r['wdays'],
+                        sql = "insert into `swap` values ('{}', {}, {}, '{}', '{}', {}, '{}', '{}', '{}', '{}')".format(
+                        counterpart, buyOrSell, price, productType + " " + r['productCode'], userid, quanPerDay * r['wdays'],
                         r['startday'].strftime("%Y-%m-%d"), datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                        r['endday'].strftime("%Y-%m-%d"), tradeId, r['wdays'])
+                        r['endday'].strftime("%Y-%m-%d"), tradeId)
                         cursor.execute(sql)
+                        sqlCli.commit()
                         sql = "select * from `dayprice` where datediff(day, '{}') >= 0 and type = '{}' and productCode = '{}'".format(r['startday'], productType, r['productCode'])
                         rows = cursor.execute(sql)
                         result = cursor.fetchall()
@@ -139,67 +124,44 @@ def swapTran():
                             result = cursor.fetchone()
                             pv = pv + (r['wdays'] - rows) * quanPerDay * result['price'] - price * quanPerDay * r['wdays']
                         r["pv"] = pv
-                        sql = "insert into `risk`(`tradeId`, `quantity`, `price`, `type`, `productType`, `productCode`, `pv`, `userId`) values ('{}', {}, {}, '{}', '{}', '{}', {}, '{}')".format(
-                        tradeId, quanPerDay * r['wdays'], price, 'Swap', productType, r['productCode'], pv, userid)
+                        sql = "insert into `risk`(`tradeId`, `quantity`, `type`, `productType`, `productCode`, `pv`, `userid`) values ('{}', {}, {}, '{}', '{}', {}, '{}')".format(
+                        tradeId, quanPerDay * r['wdays'], 0, productType, r['productCode'], pv, userid)
                         cursor.execute(sql)
                         sqlCli.commit()
         except Exception, e:
             errMsg = str(e)
         finally:
             return jsonify(err = errMsg, average = 1000.0 * quantity / totaldays, data = raw)
-    else:
-        return redirect(url_for("login"))
         
 @app.route("/futureTran", methods = ["POST"])
 def futureTran():
     userid = request.cookies.get('userid')
-    errMsg = ""
     if(userid != None and userid != ''):
         productType = request.form['futureType']
         quantity = request.form['lotOfFuture']
-        fixPrice = request.form['priceOfFuture']
+        price = request.form['priceOfFuture']
         futureCode = request.form['futureCode']
-        pv = 0
         if(quantity == None or quantity == ""):
             return jsonify(err = "Please enter the lots", risk = "")
-        elif(fixPrice == None or fixPrice == ""):
+        elif(price == None or price == ""):
             return jsonify(err = "Please enter the price", risk = "")
-        fixPrice = float(fixPrice)
-        quantity = int(quantity) * 1000
-        if(fixPrice <= 0):
+        price = float(price)
+        quantity = int(quantity)
+        if(price <= 0):
             return jsonify(err = "The price should be a positive number", risk = "")
         tradeId = jwt.encode({'userid' : userid, 'time' : str(datetime.now())}, 'secret', algorithm = 'HS256')
         try:
             with sqlCli.cursor() as cursor:
-                sql = "insert into `future`(`quantity`, `price`, `productCode`, `userId`, `timeOfTrade`, `tradeId`, `productType`)"\
-                      " values ({}, {}, '{}', '{}', '{}', '{}', '{}')".format(
-                    quantity, fixPrice, futureCode, userid,
-                    datetime.now().strftime("%Y-%m-%d %H:%M:%S"), tradeId, productType)
+                sql = "insert into `future` values ({}, {}, '{}', '{}', '{}', '{}')".format(
+                    quantity, price, productType + " " + futureCode, userid,
+                    datetime.now().strftime("%Y-%m-%d %H:%M:%S"), tradeId)
                 cursor.execute(sql)
-                sql = "select * from `contractprice` where type = '{}' and productCode = '{}'".format(productType, futureCode)
-                cursor.execute(sql)
-                marketPrice = cursor.fetchone()['price']
-                pv = (marketPrice - fixPrice) * quantity
-                sql = "insert into `risk`(`tradeId`, `quantity`, `price`, `type`, `productType`, `productCode`, `pv`, `userId`) values ('{}', {}, {}, '{}', '{}', '{}', {}, '{}')".format(
-                        tradeId, quantity, fixPrice, 'Future', productType, futureCode, pv, userid)
-                cursor.execute(sql)
-                sqlCli.commit()
-        except Exception, e:
-            errMsg = str(e)
+            sqlCli.commit()
+        except:
+            return jsonify(err = "Trade fails because of database error, please retry", risk = "")
         finally:
-            return jsonify(err = errMsg, pv = "{}".format(pv), price1 = marketPrice, price2 = fixPrice, quantity = quantity)
-    else:
-        return redirect(url_for("login"))
-@app.route("/getPrice")
-def getPrices():
-    res = None
-    try:
-        with sqlCli.cursor() as cursor:
-            sql = "select * from `dayprice` order by type, productCode, day"
-            cursor.execute(sql)
-            res = cursor.fetchall()
-    finally:
-        return jsonify(res)
+            return jsonify(err = "", risk = "{}".format(quantity))
+        
 @app.route("/getUserInfo")
 def getUserInfo():
     userid = request.cookies.get('userid')
@@ -222,31 +184,6 @@ def getUserInfo():
 def login():
     return render_template("Login.html")
 
-@app.route("/getPV")
-def getPV():
-    userid = request.cookies.get('userid')
-    res = None
-    if(userid != None and userid != ''):
-        try:
-            with sqlCli.cursor() as cursor:
-                sql = "select * from `hispv` where userId = '{}'".format(userid)
-                cursor.execute(sql)
-                res = cursor.fetchall()
-        finally:
-            return jsonify(res)
-@app.route("/traderisk", methods = ["GET"])
-def tradeRisk():
-    userid = request.cookies.get('userid')
-    tradeResult = []
-    if(userid != None and userid != ''):
-        try:
-            with sqlCli.cursor() as cursor:
-                sql = "select * from `risk` where userId = '{}'".format(userid)
-                rows = cursor.execute(sql)
-                for i in range(rows):
-                    tradeResult.append(cursor.fetchone())
-        finally:
-            return jsonify(tradeResult)
 @app.route("/tradehistory", methods = ["POST"])
 def tradeHistory():
     userid = request.cookies.get('userid')
@@ -270,24 +207,20 @@ def tradeHistory():
         
 @app.route("/getfutureinfo")
 def getFutureInfo():
-    currentTime = datetime.strftime(datetime.now(), "%Y-%m-%d")
-    wtiRes = []
-    brtRes = []
-    res = {"WTI" : wtiRes, "BRT" : brtRes}
+    currentTime = datetime.now()
+    result = []
     try:
         with sqlCli.cursor() as cursor:
-            sql = "select productCode from `info` where type = '{}' and datediff(settleDate, '{}') >= 0 order by settleDate".format("WTI", currentTime)
+            sql = "select settleDate, productCode from `info`"
             rows = cursor.execute(sql)
             for i in range(rows):
                 record = cursor.fetchone()
-                wtiRes.append(record)
-            sql = "select productCode from `info` where type = '{}' and datediff(settleDate, '{}') >= 0 order by settleDate".format("BRT", currentTime)
-            rows = cursor.execute(sql)
-            for i in range(rows):
-                record = cursor.fetchone()
-                brtRes.append(record)
+                settleDate = record['settleDate']
+                delta = settleDate - currentTime
+                if(delta.days > 0):
+                    result.append(record['productCode'])
     finally:
-        return jsonify(info = res)
+        return jsonify(info = result)
                     
 @app.route("/userpage")
 def userPage():
@@ -380,7 +313,11 @@ def register():
     else:
         return render_template("Register.html")
 
+@app.route("/riskEvaluation")
+def riskEvaluation():
+    return render_template("RiskEvaluation.html")
+
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
