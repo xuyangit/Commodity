@@ -83,7 +83,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <section id="future">
             <div class="container">
                 <div style="float: left; width: 100%">
-                    <div style="float: left; width: 40%">
+                    <div style="float: left; width: 20%">
                         <span><h2>Make a future trade</h2></span>
                         <form id="futureForm" name="futureForm">
                             <div>
@@ -121,7 +121,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </div>
                         </form>
                     </div>
-                    <div id="priceTable" style="float: left; width: 60%">
+                    <div id="priceTable" style="float: left; width: 80%; overflow-x:scroll">
                     </div>
                 </div>
             </div>
@@ -203,7 +203,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <section id="tradelist">
             <div class="container">
                 <span><h2>Your Trade History:</h2></span>
-                <div id="futureList">
+		<div style="margin:10px">
+                <div id="futureList" style="float:left; width:50%">
                     <span id="futureTradeSpan"><h3>You make x future trades:</h3></span>
                     <table name="futureRecords" id="futureRecords" class="gridtable">
                         <tbody>
@@ -217,7 +218,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </tbody>
                     </table>
                 </div>
-                <div id="swapList">
+                <div id="swapList" style="float:left; width:50%">
                     <span id="swapTradeSpan"><h3>You make x swap trades:</h3></span>
                     <table name="swapRecords" id="swapRecords" class="gridtable">
                         <tbody>
@@ -227,20 +228,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <th>Product code</th>
                             <th>Quantity(BBL)</th>
                             <th>Price($/BBL)</th>
-                            <th>Risk</th>
+                            <th>BuyOrSell</th>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <div id="pivotTable">
+		</div>
+                <span id="nowPv"><h3>Today's PV for your trades:</h3></span>
+                <div id="pivotTable" style="margin:10px;">
 
                 </div>
             </div>
         </section>
         <section id="pv">
             <div class="container">
-                <div id="pvChart"></div>
-                <div id="plChart"></div>
+                <span id="dailyPv"><h3>Daily PV for your trades:</h3></span>
+                <div id="pvChart" style="width: 100%; overflow-x:scroll;"></div>
+                <span id="dailyPl"><h3>Daily PL for your trades:</h3></span>
+                <div id="plChart" style="width: 100%; overflow-x:scroll;"></div>
             </div>
         </section>
         <section id="userinfo">
@@ -293,6 +298,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 cols: ["day"],
                 aggregatorName: "Sum",
                 vals: ["pv"],
+                renderers: renderers,
+                rendererName: "Heatmap"
+            });
+        });
+        $.getJSON("getPL", function (pl) {
+            $("#plChart").pivotUI(pl, {
+                rows: ["tradeId"],
+                cols: ["day"],
+                aggregatorName: "Sum",
+                vals: ["pl"],
                 renderers: renderers,
                 rendererName: "Heatmap"
             });
@@ -368,7 +383,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 row.insertCell(2).innerText = jsonObject.swap[i].productCode;
                 row.insertCell(3).innerText = jsonObject.swap[i].quantity;
                 row.insertCell(4).innerText = jsonObject.swap[i].price;
-                row.insertCell(5).innerText = jsonObject.swap[i].quantity;
+                row.insertCell(5).innerText = (jsonObject.swap[i].buyOrSell == 1)?"Buy":"Sell";
             }
             var option1 = {
                 title: {
@@ -461,13 +476,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     var chart3 = echarts.init(document.getElementById('chart3'));
     var chart4 = echarts.init(document.getElementById('chart4'));
     $("#startDate").pickadate({
-        min: new Date(2016, 11, 1),
+        min: new Date(2016, 12, 1),
         format: 'yyyy-mm',
         selectYears: true,
         selectMonths: true
     });
     $("#endDate").pickadate({
-        min: new Date(2016, 11, 1),
+        min: new Date(2016, 12, 1),
         format: 'yyyy-mm',
         selectYears: true,
         selectMonths: true

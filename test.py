@@ -138,6 +138,8 @@ def swapTran():
                             cursor.execute(sql)
                             result = cursor.fetchone()
                             pv = pv + (r['wdays'] - rows) * quanPerDay * result['price'] - price * quanPerDay * r['wdays']
+                        if(buyOrSell == 0):
+                            pv = -pv
                         r["pv"] = pv
                         sql = "insert into `risk`(`tradeId`, `quantity`, `price`, `type`, `productType`, `productCode`, `pv`, `userId`) values ('{}', {}, {}, '{}', '{}', '{}', {}, '{}')".format(
                         tradeId, quanPerDay * r['wdays'], price, 'Swap', productType, r['productCode'], pv, userid)
@@ -230,6 +232,18 @@ def getPV():
         try:
             with sqlCli.cursor() as cursor:
                 sql = "select * from `hispv` where userId = '{}'".format(userid)
+                cursor.execute(sql)
+                res = cursor.fetchall()
+        finally:
+            return jsonify(res)
+@app.route("/getPL")
+def getPL():
+    userid = request.cookies.get('userid')
+    res = None
+    if(userid != None and userid != ''):
+        try:
+            with sqlCli.cursor() as cursor:
+                sql = "select * from `pl` where userId = '{}'".format(userid)
                 cursor.execute(sql)
                 res = cursor.fetchall()
         finally:
